@@ -1,0 +1,19 @@
+server:
+  port: ${SETTLEMENT_SERVER_PORT}
+
+spring:
+  config:
+    import:
+      - optional:classpath:application-common.yml
+      - optional:classpath:application-auth.yml
+      - optional:classpath:application-jpa.yml
+      - optional:classpath:application-kafka.yml
+      - optional:classpath:application-redis.yml
+      - optional:file:../.env[.properties]
+  application:
+    name: settlement-service
+  datasource:
+    driver-class-name: ${DB_DRIVER_CLASS_NAME}
+    url: ${SETTLEMENT_DB_URL}
+    username: ${SETTLEMENT_DB_USERNAME}
+    password: ${SETTLEMENT_DB_PASSWORD}

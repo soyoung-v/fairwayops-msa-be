@@ -1,0 +1,75 @@
+management:
+  endpoint:
+    gateway:
+      enabled: true
+
+
+spring:
+  application:
+    name: gateway-service
+  config:
+    import:
+      - optional:classpath:application-common.yml
+      - optional:classpath:application-auth.yml
+      - optional:classpath:application-redis.yml
+      - optional:file:../.env[.properties]
+  cloud:
+    gateway:
+      # 4.0.x 버전 Servlet Gateway의 핵심 설정 프리픽스
+      server:
+        webmvc:
+          actuator:
+            enabled: true
+          cors:
+            configurations:
+              '[/**]':
+                allowed-origins: [ "http://localhost:5173" ]
+                allowed-methods: [ "GET", "POST", "PUT", "DELETE", "OPTIONS" ]
+                allowed-headers: [ "*" ]
+                allow-credentials: true
+                max-age: 3600
+
+          # 라우팅 설정
+          routes:
+            - id: auth-service
+              uri: http://localhost:${AUTH_SERVER_PORT} # User Service 실제 포트 확인 필수
+              predicates:
+                - Path=/api/auth/**
+
+            - id: golf-course-service
+              uri: http://localhost:${GOLF_SERVER_PORT}
+              predicates:
+                - Path=/api/golf-course/**
+
+            - id: caddie-service
+              uri: http://localhost:${CADDIE_SERVER_PORT}
+              predicates:
+                - Path=/api/caddie/**
+
+            - id: operation-service
+              uri: http://localhost:${OPERATION_SERVER_PORT}
+              predicates:
+                - Path=/api/operation/**
+
+            - id: assignment-service
+              uri: http://localhost:${ASSIGNMENT_SERVER_PORT}
+              predicates:
+                - Path=/api/assignment/**
+
+            - id: settlement-service
+              uri: http://localhost:${SETTLEMENT_SERVER_PORT}
+              predicates:
+                - Path=/api/settlement/**
+
+            - id: notification-service
+              uri: http://localhost:${NOTIFICATION_SERVER_PORT}
+              predicates:
+                - Path=/api/notification/**
+
+            - id: board-service
+              uri: http://localhost:${BOARD_SERVER_PORT}
+              predicates:
+                - Path=/api/board/**
+
+server:
+  port: ${GATEWAY_SERVER_PORT}

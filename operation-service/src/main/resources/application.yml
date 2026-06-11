@@ -1,0 +1,19 @@
+server:
+  port: ${OPERATION_SERVER_PORT}
+
+spring:
+  config:
+    import:
+      - optional:classpath:application-common.yml
+      - optional:classpath:application-auth.yml
+      - optional:classpath:application-jpa.yml
+      - optional:classpath:application-kafka.yml
+      - optional:classpath:application-redis.yml
+      - optional:file:../.env[.properties]
+  application:
+    name: operation-service
+  datasource:
+    driver-class-name: ${DB_DRIVER_CLASS_NAME}
+    url: ${OPERATION_DB_URL}
+    username: ${OPERATION_DB_USERNAME}
+    password: ${OPERATION_DB_PASSWORD}

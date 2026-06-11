@@ -1,0 +1,27 @@
+# actuator ??
+management:
+  endpoints:
+    web:
+      exposure:
+        # ?? ?????? ?(HTTP)?? ?? (?? ????? ??)
+        include: health,info
+  endpoint:
+    health:
+      show-details: always # ??? ?? ?? ??
+    env:
+      show-values: always
+
+server:
+  tomcat:
+    threads:
+      max: 200
+
+spring:
+  threads:
+    virtual:
+      enabled: true
+  jackson:
+    default-property-inclusion: non_null
+  web:
+    resources:
+      add-mappings: false

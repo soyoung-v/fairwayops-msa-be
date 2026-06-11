@@ -1,0 +1,19 @@
+server:
+  port: ${GOLF_SERVER_PORT}
+
+spring:
+  config:
+    import:
+      - optional:classpath:application-common.yml
+      - optional:classpath:application-auth.yml
+      - optional:classpath:application-jpa.yml
+      - optional:classpath:application-kafka.yml
+      - optional:classpath:application-redis.yml
+      - optional:file:../.env[.properties]
+  application:
+    name: golf-course-service
+  datasource:
+    driver-class-name: ${DB_DRIVER_CLASS_NAME}
+    url: ${GOLF_DB_URL}
+    username: ${GOLF_DB_USERNAME}
+    password: ${GOLF_DB_PASSWORD}
